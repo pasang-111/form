@@ -1,0 +1,609 @@
+:root {
+  --obsidian: #0b0e14;
+  --obsidian-2: #12161f;
+  --obsidian-3: #171c28;
+  --gold: #c9a24b;
+  --gold-light: #e4c878;
+  --gold-glow: rgba(201, 162, 75, 0.18);
+  --cyan: #4fd1ff;
+  --ivory: #ede9e0;
+  --muted: #8b93a7;
+  --line: rgba(201, 162, 75, 0.28);
+  --danger: #e8735c;
+  --success: #6bc79a;
+  --radius: 4px;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-top: env(safe-area-inset-top, 0px);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background:
+    radial-gradient(ellipse 900px 500px at 50% -8%, #1a2030 0%, transparent 55%),
+    radial-gradient(ellipse 600px 400px at 100% 100%, rgba(201, 162, 75, 0.04) 0%, transparent 50%),
+    repeating-linear-gradient(
+      0deg,
+      rgba(201, 162, 75, 0.03) 0px,
+      rgba(201, 162, 75, 0.03) 1px,
+      transparent 1px,
+      transparent 72px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(201, 162, 75, 0.03) 0px,
+      rgba(201, 162, 75, 0.03) 1px,
+      transparent 1px,
+      transparent 72px
+    ),
+    var(--obsidian);
+  color: var(--ivory);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.page {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: calc(32px + var(--safe-top)) 16px calc(40px + var(--safe-bottom));
+  width: 100%;
+}
+
+/* ---------- Brand mark ---------- */
+.mark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 28px;
+  text-align: center;
+  animation: fadeUp 0.7s ease both;
+}
+
+.mark-logo {
+  height: 48px;
+  width: auto;
+  max-width: min(260px, 78vw);
+  object-fit: contain;
+  display: block;
+  margin-bottom: 6px;
+  filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.45));
+}
+
+.mark-sub {
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+/* ---------- Card ---------- */
+.checkpoint {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  padding: 36px 28px 32px;
+  background: linear-gradient(165deg, rgba(18, 22, 31, 0.98) 0%, rgba(14, 17, 24, 0.99) 100%);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(201, 162, 75, 0.04),
+    0 24px 64px rgba(0, 0, 0, 0.45),
+    0 0 80px rgba(201, 162, 75, 0.03);
+  animation: fadeUp 0.75s 0.08s ease both;
+  backdrop-filter: blur(8px);
+}
+
+.checkpoint::before,
+.checkpoint::after,
+.corner-tl,
+.corner-br {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: var(--gold);
+  border-style: solid;
+  opacity: 0.85;
+  pointer-events: none;
+}
+.checkpoint::before {
+  top: -1px;
+  left: -1px;
+  border-width: 2px 0 0 2px;
+}
+.checkpoint::after {
+  bottom: -1px;
+  right: -1px;
+  border-width: 0 2px 2px 0;
+}
+.corner-tl {
+  top: -1px;
+  right: -1px;
+  border-width: 2px 2px 0 0;
+}
+.corner-br {
+  bottom: -1px;
+  left: -1px;
+  border-width: 0 0 2px 2px;
+}
+
+.scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  top: 0;
+  animation: scan 1.7s ease-out 1;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+@keyframes scan {
+  0% { top: 0%; opacity: 0; }
+  12% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.checkpoint h1 {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.15rem, 4.5vw, 1.35rem);
+  margin: 0 0 8px;
+  color: var(--ivory);
+  letter-spacing: -0.01em;
+}
+
+.checkpoint p.lede {
+  margin: 0 0 26px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+/* ---------- Fields ---------- */
+.field {
+  margin-bottom: 18px;
+}
+
+.field.floating {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.field label {
+  display: block;
+  font-size: 13px;
+  color: var(--gold-light);
+  margin-bottom: 8px;
+  letter-spacing: 0.01em;
+}
+
+.field input,
+.field textarea,
+.field select {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(139, 147, 167, 0.26);
+  border-radius: var(--radius);
+  padding: 14px 14px;
+  /* 16px minimum prevents iOS zoom on focus */
+  font-size: 16px;
+  color: var(--ivory);
+  font-family: "Inter", sans-serif;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.field.floating input {
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+
+.field.floating label {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0;
+  pointer-events: none;
+  color: #5c6578;
+  font-size: 15px;
+  transition: top 0.2s ease, font-size 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  background: transparent;
+  padding: 0 2px;
+}
+
+.field.floating input:focus + label,
+.field.floating.has-value label {
+  top: 10px;
+  transform: translateY(0);
+  font-size: 11px;
+  color: var(--gold-light);
+  letter-spacing: 0.03em;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: #4a5366;
+}
+
+.field input:focus,
+.field textarea:focus,
+.field select:focus {
+  outline: none;
+  border-color: var(--gold);
+  background: rgba(201, 162, 75, 0.06);
+  box-shadow: 0 0 0 3px var(--gold-glow);
+}
+
+.field input:focus-visible,
+.field textarea:focus-visible,
+.field select:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+}
+
+.field.floating.has-error input,
+.field.has-error input,
+.field.has-error select {
+  border-color: rgba(232, 115, 92, 0.55);
+}
+
+.field-error {
+  font-size: 12.5px;
+  color: var(--danger);
+  margin-top: 6px;
+  line-height: 1.35;
+}
+
+.field select {
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--gold) 50%),
+    linear-gradient(135deg, var(--gold) 50%, transparent 50%);
+  background-position: calc(100% - 18px) center, calc(100% - 13px) center;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 36px;
+}
+
+.field select option {
+  background: var(--obsidian-2);
+  color: var(--ivory);
+}
+
+/* ---------- Address ---------- */
+.address-group {
+  margin-bottom: 4px;
+}
+
+.address-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.address-hint {
+  margin: 0 0 12px;
+  font-size: 12.5px;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.auto-badge {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--cyan);
+  border: 1px solid rgba(79, 209, 255, 0.35);
+  border-radius: 3px;
+  padding: 1px 6px;
+  vertical-align: middle;
+}
+
+/* ---------- Combobox ---------- */
+.combobox {
+  position: relative;
+}
+
+.combobox-input-wrap {
+  position: relative;
+}
+
+.combobox-spinner {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(201, 162, 75, 0.25);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+.combobox-list {
+  position: absolute;
+  z-index: 30;
+  left: 0;
+  right: 0;
+  top: calc(100% + 4px);
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: #0e121a;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  max-height: min(240px, 40vh);
+  overflow-y: auto;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+  -webkit-overflow-scrolling: touch;
+}
+
+.combobox-list li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 12px;
+  font-size: 15px;
+  cursor: pointer;
+  color: var(--ivory);
+  border-radius: 3px;
+  min-height: 44px;
+}
+
+.combobox-list li.active,
+.combobox-list li:hover {
+  background: rgba(201, 162, 75, 0.12);
+}
+
+.combobox-list .opt-suburb {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.combobox-list .opt-meta {
+  font-size: 12px;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+/* ---------- Submit ---------- */
+.submit-btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 15px 18px;
+  min-height: 52px;
+  background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 100%);
+  color: #1a1406;
+  border: none;
+  border-radius: var(--radius);
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: filter 0.2s ease, transform 0.12s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 20px rgba(201, 162, 75, 0.25);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.submit-btn:hover:not(:disabled) {
+  filter: brightness(1.06);
+  box-shadow: 0 6px 28px rgba(201, 162, 75, 0.35);
+}
+
+.submit-btn:active:not(:disabled) {
+  transform: translateY(1px) scale(0.995);
+}
+
+.submit-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.btn-loading {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(26, 20, 6, 0.22);
+  border-top-color: #1a1406;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.form-note {
+  margin-top: 18px;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* ---------- Banners ---------- */
+.status-banner {
+  margin-bottom: 20px;
+  padding: 13px 14px;
+  border-radius: var(--radius);
+  font-size: 14px;
+  line-height: 1.45;
+  border: 1px solid;
+}
+
+.status-banner.error {
+  background: rgba(232, 115, 92, 0.1);
+  border-color: rgba(232, 115, 92, 0.4);
+  color: #f0a394;
+}
+
+/* ---------- Confirmation ---------- */
+.confirmation {
+  text-align: center;
+  padding: 8px 4px 4px;
+  animation: fadeUp 0.55s ease both;
+}
+
+.confirmation .icon {
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 20px;
+  border: 1.5px solid var(--success);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--success);
+  font-size: 22px;
+  box-shadow: 0 0 24px rgba(107, 199, 154, 0.15);
+}
+
+.confirmation h1 {
+  margin-bottom: 12px;
+}
+
+.confirmation p {
+  color: var(--muted);
+  font-size: 14.5px;
+  line-height: 1.65;
+  max-width: 34ch;
+  margin: 0 auto 24px;
+}
+
+.confirmation .ref {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--gold-light);
+  border-top: 1px solid var(--line);
+  padding-top: 18px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 480px) {
+  .page {
+    padding: calc(20px + var(--safe-top)) 12px calc(28px + var(--safe-bottom));
+    justify-content: flex-start;
+  }
+
+  .mark {
+    margin-bottom: 20px;
+  }
+
+  .mark-logo {
+    height: 42px;
+  }
+
+  .checkpoint {
+    padding: 28px 18px 26px;
+    max-width: 100%;
+  }
+
+  .checkpoint h1 {
+    font-size: 1.2rem;
+  }
+
+  .checkpoint p.lede {
+    margin-bottom: 22px;
+    font-size: 13.5px;
+  }
+
+  .address-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .field.floating {
+    margin-bottom: 18px;
+  }
+
+  .submit-btn {
+    margin-top: 6px;
+    position: sticky;
+    bottom: calc(8px + var(--safe-bottom));
+  }
+}
+
+@media (max-width: 360px) {
+  .checkpoint {
+    padding: 24px 14px 22px;
+  }
+}
+
+@media (min-width: 640px) {
+  .page {
+    padding: 48px 24px 56px;
+  }
+
+  .mark-logo {
+    height: 56px;
+  }
+
+  .checkpoint {
+    padding: 44px 36px 38px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scan-line {
+    animation: none;
+    display: none;
+  }
+  .spinner,
+  .combobox-spinner {
+    animation: none;
+  }
+  .mark,
+  .checkpoint,
+  .confirmation {
+    animation: none;
+  }
+}
+
+/* Touch: larger hit targets for dropdown items already 44px */
+@supports (padding: max(0px)) {
+  .page {
+    padding-left: max(12px, env(safe-area-inset-left));
+    padding-right: max(12px, env(safe-area-inset-right));
+  }
+}
